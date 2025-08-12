@@ -70,11 +70,12 @@ def generate_pie_chart(df_by_payment):
         theta=alt.Theta("faturamento", stack=True),
         color=alt.Color("tipo_de_pagamento", title="Tipo de Pagamento")
     ).properties(
-        title='Total de Faturamento por Tipo de Pagamento'
+        title='Total de Faturamento por Tipo de Pagamento',
+        width='container'
     )
 
     # Camada de pizza
-    pie = base.mark_arc(outerRadius=120).encode(
+    pie = base.mark_arc(outerRadius=80).encode(
         tooltip=[
             "tipo_de_pagamento",
             alt.Tooltip("faturamento", format=".2f", title="Faturamento"),
@@ -84,7 +85,7 @@ def generate_pie_chart(df_by_payment):
 
     # Texto sempre visível
     text = base.mark_text(
-        radius=140,                # distância do centro
+        radius=100,                # distância do centro
         fontWeight="bold",         # negrito para destaque
         fontSize=14,               # tamanho do texto
         color="black"              # cor fixa para legibilidade
