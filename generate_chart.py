@@ -30,9 +30,14 @@ def generate_stacked_bar_chart(df_by_payment):
 
     # Gráfico de barras empilhadas
     chart_stacked_bars = alt.Chart(df_stacked).mark_bar().encode(
-        x=alt.X('Valor', title='Faturamento (R$)', axis=alt.Axis(format=".0f") ),
-        y=alt.Y('tipo_de_pagamento', title='Tipo de Pagamento'),
-        color=alt.Color('Tipo de Faturamento', title='Faturamento'),
+        x=alt.X('Valor',  axis=alt.Axis(format=".0f") ),
+        y=alt.Y('tipo_de_pagamento'),
+        color=alt.Color('Tipo de Faturamento', title='Faturamento',
+        legend=alt.Legend(
+        orient="bottom",  # coloca a legenda embaixo
+        direction="horizontal",  # orientação horizontal
+        columns=2               # 2 itens por linha
+    )                ),
         tooltip=[
             alt.Tooltip('tipo_de_pagamento', title='Tipo de Pagamento'),
             alt.Tooltip('Tipo de Faturamento', title='Tipo de Faturamento'),
@@ -51,8 +56,8 @@ def generate_stacked_bar_chart(df_by_payment):
         baseline='middle',
         dx=5 # desloca o texto para a direita da barra
     ).encode(
-        x=alt.X('faturamento', title='Faturamento (R$)' , axis=alt.Axis(format=".0f")  ),
-        y=alt.Y('tipo_de_pagamento', title='Tipo de Pagamento'),
+        x=alt.X('faturamento', title=None  , axis=alt.Axis(format=".0f")  ),
+        y=alt.Y('tipo_de_pagamento', title=None ),
         text=alt.Text('faturamento', format=".2f")
     )
 
@@ -68,14 +73,22 @@ def generate_pie_chart(df_by_payment):
 
     base = alt.Chart(df_by_payment).encode(
         theta=alt.Theta("faturamento", stack=True),
-        color=alt.Color("tipo_de_pagamento", title="Tipo de Pagamento")
+        color=alt.Color(
+            "tipo_de_pagamento",
+            title="Tipo de Pagamento",
+            legend=alt.Legend(
+        orient="bottom",  # coloca a legenda embaixo
+        direction="horizontal",  # orientação horizontal
+        columns=2               # 2 itens por linha
+    )  # legenda embaixo
+        )
     ).properties(
         title='Total de Faturamento por Tipo de Pagamento',
         width='container'
     )
 
     # Camada de pizza
-    pie = base.mark_arc(outerRadius=80).encode(
+    pie = base.mark_arc(outerRadius=90).encode(
         tooltip=[
             "tipo_de_pagamento",
             alt.Tooltip("faturamento", format=".2f", title="Faturamento"),
@@ -85,7 +98,7 @@ def generate_pie_chart(df_by_payment):
 
     # Texto sempre visível
     text = base.mark_text(
-        radius=100,                # distância do centro
+        radius=110,                # distância do centro
         fontWeight="bold",         # negrito para destaque
         fontSize=14,               # tamanho do texto
         color="black"              # cor fixa para legibilidade
