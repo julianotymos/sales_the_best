@@ -51,8 +51,6 @@ def tab_sales_total(start_date, end_date):
 
         st.markdown("---")
         
-        st.markdown("---")
-        
         st.header("Análise Diária de Vendas")
         st.subheader("Gráfico de Vendas por Canal")
         
