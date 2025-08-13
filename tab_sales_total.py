@@ -15,13 +15,11 @@ def tab_sales_total(start_date, end_date):
     if not total_sales_df.empty:
         total_row = total_sales_df.iloc[0]
         
-        # O NÚMERO DE COLUNAS FOI AUMENTADO DE 9 PARA 12
-        col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12 = st.columns(12)
+        col1, col2, col3, col4, col5, col6 = st.columns(6)
         
         with col1:
             st.metric("Total Geral", f"{total_row['Total Geral']:.2f}")
         with col2:
-            # O CÁLCULO DE QTD. TOTAL DE VENDAS FOI ATUALIZADO PARA INCLUIR O 99FOOD
             st.metric("Qtd. Total de Vendas", int(total_row['Qtd. Vendas Loja'] + total_row['Qtd. Vendas iFood'] + total_row['Qtd. Vendas 99food']))
         with col3:
             st.metric("Ticket Medio Total", f"{total_row['ticket_medio_total']:.2f}")
@@ -31,19 +29,27 @@ def tab_sales_total(start_date, end_date):
             st.metric("Qtd. Vendas Loja", int(total_row['Qtd. Vendas Loja']))
         with col6:
             st.metric("Ticket Médio Loja", f"{total_row['Ticket Médio Loja']:.2f}")
-        with col7:
+            
+        st.markdown("---")
+        
+        # --- NOVO TRECHO ADICIONADO ---
+        # Segunda linha de colunas para as métricas de delivery (iFood e 99food)
+        col_del1, col_del2, col_del3, col_del4, col_del5, col_del6 = st.columns(6)
+        
+        with col_del1:
             st.metric("Total iFood", f"{total_row['Total iFood']:.2f}")
-        with col8:
+        with col_del2:
             st.metric("Qtd. Vendas iFood", int(total_row['Qtd. Vendas iFood']))
-        with col9:
+        with col_del3:
             st.metric("Ticket Médio iFood", f"{total_row['Ticket Médio iFood']:.2f}")
-        with col10:
-            # NOVAS MÉTRICAS DO 99FOOD ADICIONADAS
+        with col_del4:
             st.metric("Total 99food", f"{total_row['Total 99food']:.2f}")
-        with col11:
+        with col_del5:
             st.metric("Qtd. Vendas 99food", int(total_row['Qtd. Vendas 99food']))
-        with col12:
+        with col_del6:
             st.metric("Ticket Médio 99food", f"{total_row['Ticket Médio 99food']:.2f}")
+
+        st.markdown("---")
         
         st.markdown("---")
         

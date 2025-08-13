@@ -7,7 +7,7 @@ def tab_sales_by_payment(start_date, end_date):
     """
     Exibe o conteúdo da aba "Vendas por Pagamento" do dashboard de vendas.
     """
-    st.header("Métricas Totais - Vendas por Pagamento")
+    st.header("Métricas Totais - Vendas por Pagamento Loja")
 
     df_detailed, df_by_payment, df_total_summary = read_sales_by_payment_type_report(start_date, end_date)
     
