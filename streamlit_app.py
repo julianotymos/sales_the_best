@@ -47,6 +47,6 @@ else:
     last_run_df = read_process_last_run(["SALES_THE_BEST", "IFOOD_ORDERS_PROCESS", "99FOOD_ORDERS_PROCESS"])
     if not last_run_df.empty:
         for index, row in last_run_df.iterrows():
-            st.sidebar.info(f"**{row['name']}**\nÚltima execução: {row['last_run_date'].strftime('%d/%m/%Y %H:%M:%S')}")
+            st.sidebar.info(f"**{row['name']}**\nÚltima atualização: {row['last_run_date'].strftime('%d/%m/%Y %H:%M:%S')}")
     else:
         st.sidebar.warning("Nenhum dado de status encontrado.")
