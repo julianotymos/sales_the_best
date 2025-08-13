@@ -44,7 +44,7 @@ else:
     # --- Status de Processamento na Barra Lateral (comum para as duas abas) ---
     st.sidebar.markdown("---")
     st.sidebar.header("🔄 Status de Processamento")
-    last_run_df = read_process_last_run(["SALES_THE_BEST", "IFOOD_ORDERS_PROCESS"])
+    last_run_df = read_process_last_run(["SALES_THE_BEST", "IFOOD_ORDERS_PROCESS", "99FOOD_ORDERS_PROCESS"])
     if not last_run_df.empty:
         for index, row in last_run_df.iterrows():
             st.sidebar.info(f"**{row['name']}**\nÚltima execução: {row['last_run_date'].strftime('%d/%m/%Y %H:%M:%S')}")
