@@ -65,7 +65,8 @@ def tab_sales_total(start_date, end_date):
 
         # Criação do gráfico Altair
         chart = alt.Chart(df_long).mark_line(point=True).encode(
-            x=alt.X('Data da Venda:T', title=None),
+            x=alt.X('Data da Venda:T', title=None ,
+            axis=alt.Axis(format="%d/%m/%Y")),
             y=alt.Y(
                 'Valor:Q',
                 title=None,
@@ -74,10 +75,10 @@ def tab_sales_total(start_date, end_date):
             color=alt.Color('Categoria:N', title='Categoria', legend=alt.Legend(
                 orient="bottom", 
                 direction="horizontal",
-                columns=2
+                columns=3
             )),
             tooltip=[
-                alt.Tooltip('Data da Venda:T', title='Data da Venda'),
+                alt.Tooltip('Data da Venda:T', title='Data da Venda', format="%d/%m/%Y"),
                 alt.Tooltip('Categoria:N', title='Categoria'),
                 alt.Tooltip('Valor:Q', title='Valor (R$)', format=".2f")
             ]
