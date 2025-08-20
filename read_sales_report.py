@@ -43,7 +43,9 @@ def read_sales_report(start_date, end_date):
             SUM(od.ITEM_VALUE) / COUNT(1) AS ticket_medio_ifood
         FROM order_delivery od
         where 1=1
-        and sales_channel in ('iFood' , 'Sob Demanda')
+        and od.sales_channel in ('iFood' , 'Sob Demanda')
+        AND od.CANCELLATION_SOURCE IS not null
+
         GROUP BY DATE(od.order_date)
     ) AS i ON i.data_venda = s.data_venda
     LEFT JOIN (
@@ -54,7 +56,8 @@ def read_sales_report(start_date, end_date):
             SUM(od.ITEM_VALUE) / COUNT(1) AS ticket_medio_99food
         FROM order_delivery od
         where 1=1
-        and sales_channel in ('99food')
+        and od.sales_channel in ('99food')
+        AND od.CANCELLATION_SOURCE IS not null
         GROUP BY DATE(od.order_date)
     ) AS N ON N.data_venda = s.data_venda
 
