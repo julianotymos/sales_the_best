@@ -26,7 +26,7 @@ st.markdown("Visão geral das vendas diárias e totais da loja e do iFood.")
 # --- Barra Lateral para Filtros e Status ---
 st.sidebar.header("🗓️ Período de Análise")
 
-start_date = st.sidebar.date_input("Data Inicial", datetime.now().date().replace(day=1))
+start_date = st.sidebar.date_input("Data Inicial", datetime.now().date())
 end_date = st.sidebar.date_input("Data Final", datetime.now().date())
 
 if start_date > end_date:

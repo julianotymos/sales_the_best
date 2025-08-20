@@ -44,7 +44,7 @@ def read_sales_report(start_date, end_date):
         FROM order_delivery od
         where 1=1
         and od.sales_channel in ('iFood' , 'Sob Demanda')
-        AND od.CANCELLATION_SOURCE IS not null
+        AND od.CANCELLATION_SOURCE IS null
 
         GROUP BY DATE(od.order_date)
     ) AS i ON i.data_venda = s.data_venda
@@ -57,7 +57,7 @@ def read_sales_report(start_date, end_date):
         FROM order_delivery od
         where 1=1
         and od.sales_channel in ('99food')
-        AND od.CANCELLATION_SOURCE IS not null
+        AND od.CANCELLATION_SOURCE IS null
         GROUP BY DATE(od.order_date)
     ) AS N ON N.data_venda = s.data_venda
 

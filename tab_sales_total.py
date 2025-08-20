@@ -34,19 +34,26 @@ def tab_sales_total(start_date, end_date):
         
         # --- NOVO TRECHO ADICIONADO ---
         # Segunda linha de colunas para as métricas de delivery (iFood e 99food)
-        col_del1, col_del2, col_del3, col_del4, col_del5, col_del6 = st.columns(6)
-        
+        col_del1, col_del2, col_del3, col_del4, col_del5, col_del6, col_del7, col_del8 = st.columns(8)
+
+        # --- Novas métricas nas duas primeiras colunas ---
         with col_del1:
-            st.metric("Total iFood", f"{total_row['Total iFood']:.2f}")
+            st.metric("Total Delivery", f"{(total_row['Total iFood'] + total_row['Total 99food']):.2f}")
         with col_del2:
-            st.metric("Qtd. Vendas iFood", int(total_row['Qtd. Vendas iFood']))
+            st.metric("Qtd. Vendas Delivery", int((total_row['Qtd. Vendas iFood']+total_row['Qtd. Vendas 99food'])))
+
+        # --- Métricas iFood e 99food nas colunas seguintes ---
         with col_del3:
-            st.metric("Ticket Médio iFood", f"{total_row['Ticket Médio iFood']:.2f}")
+            st.metric("Total iFood", f"{total_row['Total iFood']:.2f}")
         with col_del4:
-            st.metric("Total 99food", f"{total_row['Total 99food']:.2f}")
+            st.metric("Qtd. Vendas iFood", int(total_row['Qtd. Vendas iFood']))
         with col_del5:
-            st.metric("Qtd. Vendas 99food", int(total_row['Qtd. Vendas 99food']))
+            st.metric("Ticket Médio iFood", f"{total_row['Ticket Médio iFood']:.2f}")
         with col_del6:
+            st.metric("Total 99food", f"{total_row['Total 99food']:.2f}")
+        with col_del7:
+            st.metric("Qtd. Vendas 99food", int(total_row['Qtd. Vendas 99food']))
+        with col_del8:
             st.metric("Ticket Médio 99food", f"{total_row['Ticket Médio 99food']:.2f}")
 
         st.markdown("---")
