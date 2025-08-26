@@ -36,13 +36,10 @@ def tab_sales_total(start_date, end_date):
         # Segunda linha de colunas para as métricas de delivery (iFood e 99food)
         col_del1, col_del2, col_del3, col_del4, col_del5, col_del6, col_del7, col_del8 = st.columns(8)
 
-        # --- Novas métricas nas duas primeiras colunas ---
         with col_del1:
             st.metric("Total Delivery", f"{(total_row['Total iFood'] + total_row['Total 99food']):.2f}")
         with col_del2:
             st.metric("Qtd. Vendas Delivery", int((total_row['Qtd. Vendas iFood']+total_row['Qtd. Vendas 99food'])))
-
-        # --- Métricas iFood e 99food nas colunas seguintes ---
         with col_del3:
             st.metric("Total iFood", f"{total_row['Total iFood']:.2f}")
         with col_del4:
@@ -61,26 +58,21 @@ def tab_sales_total(start_date, end_date):
         st.header("Análise Diária de Vendas")
         st.subheader("Gráfico de Vendas por Canal")
         
-        # O DATAFRAME `df_long` FOI ATUALIZADO PARA INCLUIR O NOVO CANAL
+        # Remove o "Total Geral" da análise gráfica
         df_long = daily_sales_df.melt(
             id_vars=['Data da Venda'],
-            # 'Total 99food' foi adicionado à lista de variáveis
-            value_vars=['Total Loja', 'Total iFood', 'Total 99food', 'Total Geral'],
+            value_vars=['Total Loja', 'Total iFood', 'Total 99food'],  # sem Total Geral
             var_name='Categoria',
             value_name='Valor'
         )
 
-        # Criação do gráfico Altair
-        chart = alt.Chart(df_long).mark_line(point=True).encode(
-            x=alt.X('Data da Venda:T', title=None ,
-            axis=alt.Axis(format="%d/%m/%Y")),
-            y=alt.Y(
-                'Valor:Q',
-                title=None,
-                axis=alt.Axis(format='.0f')  # Remove separador de milhar
-            ),
+        # Gráfico de colunas
+        chart = alt.Chart(df_long).mark_bar(size=25).encode(
+            x=alt.X('Data da Venda:T', title=None,
+                    axis=alt.Axis(format="%d/%m/%Y")),
+            y=alt.Y('Valor:Q', title="Vendas (R$)", axis=alt.Axis(format='.0f')),
             color=alt.Color('Categoria:N', title='Categoria', legend=alt.Legend(
-                orient="bottom", 
+                orient="bottom",
                 direction="horizontal",
                 columns=3
             )),
