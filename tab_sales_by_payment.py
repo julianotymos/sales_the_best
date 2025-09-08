@@ -26,9 +26,9 @@ def tab_sales_by_payment(start_date, end_date):
         with col5:
             st.metric("Fat. sem NFC", format_currency(total_row['faturamento'] - total_row['faturamento_com_nfc'] , 'BRL', locale='pt_BR'))
         with col6:
-            st.metric("Fat. com NFC sem Venda", format_currency(total_row['nfc_sem_venda'], 'BRL', locale='pt_BR'))
+            st.metric("Fat. com NFC Sorvete", format_currency(total_row['nfc_sorvete'], 'BRL', locale='pt_BR'))
         with col7:
-            st.metric("Qtd. de NFC sem Venda", int(total_row['quantidade_de_nfc_sem_venda']))
+            st.metric("Qtd. de NFC Sorvete", int(total_row['quantidade_de_nfc_sorvete']))
 
         st.markdown("---")
         
@@ -41,7 +41,7 @@ def tab_sales_by_payment(start_date, end_date):
         st.markdown("---")
         
         st.subheader("Faturamento com e sem NFC por Tipo de Pagamento")
-        colunas_para_formatar = ['faturamento', 'faturamento_com_nfc', 'nfc_sem_venda']
+        colunas_para_formatar = ['faturamento', 'faturamento_com_nfc', 'nfc_sorvete']
     
         final_chart_stacked_bars = generate_stacked_bar_chart(df_by_payment)
         st.altair_chart(final_chart_stacked_bars, use_container_width=True)

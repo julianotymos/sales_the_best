@@ -44,11 +44,12 @@ def read_sales_by_payment_type_report(start_date, end_date) -> Tuple[pd.DataFram
         SUM(CASE WHEN abstract_sale = false THEN 1 ELSE 0 END) AS total_vendas,
         SUM(CASE WHEN nfc_url IS NOT NULL AND abstract_sale = false THEN (amount - CHANGE_AMOUNT) ELSE 0 END) AS faturamento_com_nfc,
         SUM(CASE WHEN nfc_url IS NOT NULL AND abstract_sale = false THEN 1 ELSE 0 END) AS quantidade_de_nfc,
-        SUM(CASE WHEN nfc_url IS NOT NULL AND abstract_sale = TRUE THEN (amount - CHANGE_AMOUNT) ELSE 0 END) AS nfc_sem_venda,
-        SUM(CASE WHEN nfc_url IS NOT NULL AND abstract_sale = TRUE THEN 1 ELSE 0 END) AS quantidade_de_nfc_sem_venda
+        SUM(CASE WHEN nfc_url IS NOT NULL AND product_code_changed = TRUE THEN (amount - CHANGE_AMOUNT) ELSE 0 END) AS nfc_sorvete,
+        SUM(CASE WHEN nfc_url IS NOT NULL AND product_code_changed = TRUE THEN 1 ELSE 0 END) AS quantidade_de_nfc_sorvete
     FROM
         sales
     WHERE 1=1
+        AND abstract_sale = false
         AND TYPE = 0
         AND date(created_at) >= %s
         AND date(created_at) <= %s
@@ -78,8 +79,8 @@ def read_sales_by_payment_type_report(start_date, end_date) -> Tuple[pd.DataFram
                         'total_vendas',
                         'faturamento_com_nfc',
                         'quantidade_de_nfc',
-                        'nfc_sem_venda',
-                        'quantidade_de_nfc_sem_venda'
+                        'nfc_sorvete',
+                        'quantidade_de_nfc_sorvete'
                     ]
                     for col in numeric_cols:
                         df_detailed[col] = pd.to_numeric(df_detailed[col], errors='coerce')
