@@ -34,25 +34,39 @@ def tab_sales_total(start_date, end_date):
         
         # --- NOVO TRECHO ADICIONADO ---
         # Segunda linha de colunas para as métricas de delivery (iFood e 99food)
-        col_del1, col_del2, col_del3, col_del4, col_del5, col_del6, col_del7, col_del8 = st.columns(8)
+        col_del1, col_del2 , col_delM  = st.columns(3)
 
         with col_del1:
-            st.metric("Total Delivery", f"{(total_row['Total iFood'] + total_row['Total 99food']):.2f}")
+            st.metric("Total Delivery", f"{(total_row['Total iFood'] + total_row['Total 99food'] + total_row['Total Keeta']):.2f}")
         with col_del2:
-            st.metric("Qtd. Vendas Delivery", int((total_row['Qtd. Vendas iFood']+total_row['Qtd. Vendas 99food'])))
+            st.metric("Qtd. Vendas Delivery", int((total_row['Qtd. Vendas iFood']+total_row['Qtd. Vendas 99food'] +total_row['Qtd. Vendas Keeta'] )))
+        with col_delM:
+            st.metric("Ticket Médio Delivery", f"{((total_row['Total iFood'] + total_row['Total 99food'] + total_row['Total Keeta']) / (int(total_row['Qtd. Vendas iFood'] + total_row['Qtd. Vendas 99food'] + total_row['Qtd. Vendas Keeta'])) if (int(total_row['Qtd. Vendas iFood'] + total_row['Qtd. Vendas 99food'] + total_row['Qtd. Vendas Keeta'])) > 0 else 0):.2f}"
+    )
+        col_del3, col_del4, col_del5 = st.columns(3)            
         with col_del3:
             st.metric("Total iFood", f"{total_row['Total iFood']:.2f}")
         with col_del4:
             st.metric("Qtd. Vendas iFood", int(total_row['Qtd. Vendas iFood']))
         with col_del5:
             st.metric("Ticket Médio iFood", f"{total_row['Ticket Médio iFood']:.2f}")
+
+        col_del6, col_del7, col_del8  = st.columns(3)
         with col_del6:
             st.metric("Total 99food", f"{total_row['Total 99food']:.2f}")
         with col_del7:
             st.metric("Qtd. Vendas 99food", int(total_row['Qtd. Vendas 99food']))
         with col_del8:
             st.metric("Ticket Médio 99food", f"{total_row['Ticket Médio 99food']:.2f}")
+            
+        colk1, colk2, colk3 = st.columns(3)
 
+        with colk1:
+            st.metric("Total Keeta", f"{total_row['Total Keeta']:.2f}")
+        with colk2:
+            st.metric("Qtd. Vendas Keeta", int(total_row['Qtd. Vendas Keeta']))
+        with colk3:
+            st.metric("Ticket Médio Keeta", f"{total_row['Ticket Médio Keeta']:.2f}")
         st.markdown("---")
         
         st.header("Análise Diária de Vendas")
@@ -61,7 +75,7 @@ def tab_sales_total(start_date, end_date):
         # Remove o "Total Geral" da análise gráfica
         df_long = daily_sales_df.melt(
             id_vars=['Data da Venda'],
-            value_vars=['Total Loja', 'Total iFood', 'Total 99food'],  # sem Total Geral
+            value_vars=['Total Loja', 'Total iFood', 'Total 99food' , 'Total Keeta'],  # sem Total Geral
             var_name='Categoria',
             value_name='Valor'
         )
